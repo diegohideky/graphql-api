@@ -1,0 +1,17 @@
+
+version: '2'
+
+services:
+  mongodb:
+    image: mongo:3.2.6
+    ports:
+      - "27017:27017"
+
+  mongo-seed:
+    image: mongo:3.2.6
+    links:
+      - mongodb
+    volumes:
+      - ./seed-data:/seed-data
+    command:
+      'bash -c "mongoimport --host mongodb --type json --file /seed-data/projects.json --jsonArray"'
